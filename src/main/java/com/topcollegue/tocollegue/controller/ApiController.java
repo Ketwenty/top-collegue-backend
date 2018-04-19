@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,6 +19,7 @@ import com.topcollegue.tocollegue.service.model.Avis;
 
 @RestController
 @RequestMapping("/api/top/collegues")
+@CrossOrigin("*")
 public class ApiController {
 
 	@Autowired
@@ -38,7 +40,7 @@ public class ApiController {
 				Integer newScore = collegue.get().getScore() + 10;
 				collegue.get().setScore(newScore);
 			} else {
-				Integer newScore = collegue.get().getScore() - 5;
+				Integer newScore = collegue.get().getScore() > 0 ? collegue.get().getScore() - 5 : 0;
 				collegue.get().setScore(newScore);
 			}
 		    return ResponseEntity.ok(cRepo.save(collegue.get()));
