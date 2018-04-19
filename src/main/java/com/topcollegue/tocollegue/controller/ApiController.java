@@ -30,6 +30,19 @@ public class ApiController {
 		return cRepo.findAll();
 	}
 
+	@GetMapping("/{name}")
+	public ResponseEntity<?> search(@PathVariable String name) {
+		Optional<Collegue> collegue = cRepo.findByName(name);
+
+		if (collegue.isPresent()) {
+
+			return ResponseEntity.ok(collegue.get());
+		} else {
+			// ResponseEntity.status(HttpStatus.CREATED)
+			return ResponseEntity.badRequest().body("Pas de collègue trouvé pour le pseudo :" + name + "!");
+		}
+	}
+
 	@PatchMapping("/{pseudo}")
 	public ResponseEntity<?> updateScore(@PathVariable String pseudo, @RequestBody Avis avis) {
 
@@ -43,7 +56,7 @@ public class ApiController {
 				Integer newScore = collegue.get().getScore() > 0 ? collegue.get().getScore() - 5 : 0;
 				collegue.get().setScore(newScore);
 			}
-		    return ResponseEntity.ok(cRepo.save(collegue.get()));
+			return ResponseEntity.ok(cRepo.save(collegue.get()));
 		} else {
 			// ResponseEntity.status(HttpStatus.CREATED)
 			return ResponseEntity.badRequest().body("Pas de collègue trouvé pour le pseudo :" + pseudo + "!");
