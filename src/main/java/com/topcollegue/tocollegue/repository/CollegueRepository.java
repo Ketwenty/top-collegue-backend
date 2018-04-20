@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.topcollegue.tocollegue.entity.Collegue;
 
 public interface CollegueRepository extends JpaRepository<Collegue, Integer> {
-	Optional<Collegue> findByName(String name);
+	Optional<Collegue> findByLightColleguePseudo(String pseudo);
 }

@@ -30,31 +30,32 @@ public class ApiController {
 		return cRepo.findAll();
 	}
 
-	@GetMapping("/{name}")
-	public ResponseEntity<?> search(@PathVariable String name) {
-		Optional<Collegue> collegue = cRepo.findByName(name);
+	@GetMapping("/{pseudo}")
+	public ResponseEntity<?> search(@PathVariable String pseudo) {
+		Optional<Collegue> collegue = cRepo.findByLightColleguePseudo(pseudo);
 
 		if (collegue.isPresent()) {
-
 			return ResponseEntity.ok(collegue.get());
 		} else {
 			// ResponseEntity.status(HttpStatus.CREATED)
-			return ResponseEntity.badRequest().body("Pas de collègue trouvé pour le pseudo :" + name + "!");
+			return ResponseEntity.badRequest().body("Pas de collègue trouvé pour le pseudo :" + pseudo + "!");
 		}
 	}
 
 	@PatchMapping("/{pseudo}")
 	public ResponseEntity<?> updateScore(@PathVariable String pseudo, @RequestBody Avis avis) {
 
-		Optional<Collegue> collegue = cRepo.findByName(pseudo);
+		Optional<Collegue> collegue = cRepo.findByLightColleguePseudo(pseudo);
 
 		if (collegue.isPresent()) {
 			if (avis.getAction().equals(com.topcollegue.tocollegue.entity.Avis.AIMER)) {
-				Integer newScore = collegue.get().getScore() + 10;
-				collegue.get().setScore(newScore);
+				Integer newScore = collegue.get().getLightCollegue().getScore() + 10;
+				collegue.get().getLightCollegue().setScore(newScore);
 			} else {
-				Integer newScore = collegue.get().getScore() > 0 ? collegue.get().getScore() - 5 : 0;
-				collegue.get().setScore(newScore);
+				Integer newScore = collegue.get().getLightCollegue().getScore() > 0
+						? collegue.get().getLightCollegue().getScore() - 5
+						: 0;
+				collegue.get().getLightCollegue().setScore(newScore);
 			}
 			return ResponseEntity.ok(cRepo.save(collegue.get()));
 		} else {

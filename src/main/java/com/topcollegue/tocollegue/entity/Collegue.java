@@ -1,11 +1,14 @@
 package com.topcollegue.tocollegue.entity;
 
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import com.topcollegue.tocollegue.service.model.LightCollegue;
 
 /**
  * @author Kevin M.
@@ -22,20 +25,28 @@ public class Collegue {
 
 	/** name : String */
 	@Column(name = "NAME")
-	private String name;
+	private String name;;
 
-	/** urlImage : String */
-	@Column(name = "URL_IMAGE")
-	private String urlImage;
+	/** prenom : String */
+	@Column(name = "PRENOM")
+	private String prenom;
 
-	/** score : Integer */
-	@Column(name = "SCORE")
-	private Integer score;
+	/** email : String */
+	@Column(name = "EMAIL")
+	private String email;
+
+	/** Adresse : String */
+	@Column(name = "ADRESSE")
+	private String adresse;
+
+	/** lightCollegue : LightCollegue */
+	@Embedded
+	private LightCollegue lightCollegue;
+
 	/**
 	 * Constructor
 	 */
 	public Collegue() {
-
 	}
 
 	/**
@@ -43,17 +54,20 @@ public class Collegue {
 	 * 
 	 * @param id
 	 * @param name
-	 * @param urlImage
-	 * @param score
+	 * @param prenom
+	 * @param email
+	 * @param adresse
 	 */
-	public Collegue(Integer id, String name, String urlImage, Integer score) {
+	public Collegue(Integer id, String name, String urlImage, Integer score, String prenom, String pseudo, String email,
+			String adresse) {
 		super();
 		this.id = id;
 		this.name = name;
-		this.urlImage = urlImage;
-		this.score = score;
+		this.prenom = prenom;
+		this.email = email;
+		this.adresse = adresse;
+		this.lightCollegue = new LightCollegue(pseudo, score, urlImage);
 	}
-
 
 	/** Getter @return the id */
 	public Integer getId() {
@@ -75,23 +89,43 @@ public class Collegue {
 		this.name = name;
 	}
 
-	/** Getter @return the urlImage */
-	public String getUrlImage() {
-		return urlImage;
+	/** Getter @return the prenom */
+	public String getPrenom() {
+		return prenom;
 	}
 
-	/** Setter @param urlImage the urlImage to set */
-	public void setUrlImage(String urlImage) {
-		this.urlImage = urlImage;
+	/** Setter @param prenom the prenom to set */
+	public void setPrenom(String prenom) {
+		this.prenom = prenom;
 	}
 
-	/** Getter @return the score */
-	public Integer getScore() {
-		return score;
+	/** Getter @return the email */
+	public String getEmail() {
+		return email;
 	}
 
-	/** Setter @param score the score to set */
-	public void setScore(Integer score) {
-		this.score = score;
+	/** Setter @param email the email to set */
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	/** Getter @return the adresse */
+	public String getAdresse() {
+		return adresse;
+	}
+
+	/** Setter @param adresse the adresse to set */
+	public void setAdresse(String adresse) {
+		this.adresse = adresse;
+	}
+
+	/** Getter @return the lightCollegue */
+	public LightCollegue getLightCollegue() {
+		return lightCollegue;
+	}
+
+	/** Setter @param lightCollegue the lightCollegue to set */
+	public void setLightCollegue(LightCollegue lightCollegue) {
+		this.lightCollegue = lightCollegue;
 	}
 }
