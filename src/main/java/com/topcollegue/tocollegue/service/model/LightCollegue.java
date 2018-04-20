@@ -13,7 +13,7 @@ public class LightCollegue {
 	@Column(name = "SCORE")
 	private Integer score;
 	/** urlImage : String */
-	@Column(name = "URL_IMAGE")
+	@Column(name = "URL_IMAGE", length = 5000)
 	private String urlImage;
 
 	/**

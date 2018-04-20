@@ -2,6 +2,7 @@ package com.topcollegue.tocollegue.controller;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.topcollegue.tocollegue.entity.Collegue;
 import com.topcollegue.tocollegue.repository.CollegueRepository;
 import com.topcollegue.tocollegue.service.model.Avis;
+import com.topcollegue.tocollegue.service.model.LightCollegue;
 
 @RestController
 @RequestMapping("/api/top/collegues")
@@ -25,11 +27,13 @@ public class ApiController {
 	@Autowired
 	CollegueRepository cRepo;
 
+	// retourne la liste de collègue partiel
 	@GetMapping()
-	public List<Collegue> searchAll() {
-		return cRepo.findAll();
+	public List<LightCollegue> searchAll() {
+		return cRepo.findAll().stream().map(c -> c.getLightCollegue()).collect(Collectors.toList());
 	}
 
+	// retourne un collègue complet
 	@GetMapping("/{pseudo}")
 	public ResponseEntity<?> search(@PathVariable String pseudo) {
 		Optional<Collegue> collegue = cRepo.findByLightColleguePseudo(pseudo);
@@ -42,6 +46,7 @@ public class ApiController {
 		}
 	}
 
+	// met à jour le scrore d'un collègue
 	@PatchMapping("/{pseudo}")
 	public ResponseEntity<?> updateScore(@PathVariable String pseudo, @RequestBody Avis avis) {
 
@@ -57,7 +62,7 @@ public class ApiController {
 						: 0;
 				collegue.get().getLightCollegue().setScore(newScore);
 			}
-			return ResponseEntity.ok(cRepo.save(collegue.get()));
+			return ResponseEntity.ok(cRepo.save(collegue.get()).getLightCollegue());
 		} else {
 			// ResponseEntity.status(HttpStatus.CREATED)
 			return ResponseEntity.badRequest().body("Pas de collègue trouvé pour le pseudo :" + pseudo + "!");
