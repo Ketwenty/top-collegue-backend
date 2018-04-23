@@ -1,42 +1,43 @@
 package com.topcollegue.tocollegue.service.model;
 
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
+public class NewCollegue {
 
-@Embeddable
-public class LightCollegue {
-
-	public final static Integer SCORE_INITIAL = 0;
-
-	/** pseudo : String */
-	@Column(name = "PSEUDO")
+	/** matricule : String */
+	private String matricule;
+	/** pseudo : Integer */
 	private String pseudo;
-	/** score : Integer */
-	@Column(name = "SCORE")
-	private Integer score;
 	/** urlImage : String */
-	@Column(name = "URL_IMAGE", length = 5000)
 	private String urlImage;
 
 	/**
 	 * Constructor
 	 */
-	public LightCollegue() {
+	public NewCollegue() {
 		super();
 	}
 
 	/**
 	 * Constructor
 	 * 
+	 * @param matricule
 	 * @param pseudo
-	 * @param score
 	 * @param urlImage
 	 */
-	public LightCollegue(String pseudo, Integer score, String urlImage) {
+	public NewCollegue(String matricule, String pseudo, String urlImage) {
 		super();
+		this.matricule = matricule;
 		this.pseudo = pseudo;
-		this.score = score;
 		this.urlImage = urlImage;
+	}
+
+	/** Getter @return the matricule */
+	public String getMatricule() {
+		return matricule;
+	}
+
+	/** Setter @param matricule the matricule to set */
+	public void setMatricule(String matricule) {
+		this.matricule = matricule;
 	}
 
 	/** Getter @return the pseudo */
@@ -47,16 +48,6 @@ public class LightCollegue {
 	/** Setter @param pseudo the pseudo to set */
 	public void setPseudo(String pseudo) {
 		this.pseudo = pseudo;
-	}
-
-	/** Getter @return the score */
-	public Integer getScore() {
-		return score;
-	}
-
-	/** Setter @param score the score to set */
-	public void setScore(Integer score) {
-		this.score = score;
 	}
 
 	/** Getter @return the urlImage */

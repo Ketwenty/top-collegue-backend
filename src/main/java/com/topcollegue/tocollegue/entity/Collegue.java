@@ -25,7 +25,7 @@ public class Collegue {
 
 	/** name : String */
 	@Column(name = "NAME")
-	private String name;;
+	private String name;
 
 	/** prenom : String */
 	@Column(name = "PRENOM")
